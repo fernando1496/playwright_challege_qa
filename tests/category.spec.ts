@@ -5,7 +5,7 @@ import { buildFakeCategory, buildFakeSubcategory } from '../testData/categoryDat
 import { Category, User } from '../utils/types';
 
 test.describe.serial('Category suite', () => {
-	test('should create a new category', async ({ createUser, loginPage }) => {
+	test('Verify category creation', async ({ createUser, loginPage }) => {
 		const user: User = createUser;
 		const fakeCategory: Category = buildFakeCategory();
 
@@ -17,7 +17,7 @@ test.describe.serial('Category suite', () => {
 		await expect(categoryPage.categoryItemTable).toContainText(fakeCategory.name);
 	});
 
-	test('should create a new sub-category', async ({ createUser, loginPage }) => {
+	test('Verify sub-category creation', async ({ createUser, loginPage }) => {
 		const user: User = createUser;
 		const fakeCategory: Category = buildFakeSubcategory();
 
