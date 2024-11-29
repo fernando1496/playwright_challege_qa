@@ -3,10 +3,12 @@ import { NavigationBarComponent } from '../components/navigationBarComponent';
 
 export class DashboardPage {
 	readonly page: Page;
-	readonly navigationBar: NavigationBarComponent;
+	readonly navigationBarComponent: NavigationBarComponent;
 
 	constructor(page: Page) {
 		this.page = page;
-		this.navigationBar = new NavigationBarComponent(page);
+
+		// Initialize the navigation bar component.
+		this.navigationBarComponent = new NavigationBarComponent(page);
 	}
 }

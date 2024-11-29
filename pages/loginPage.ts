@@ -3,30 +3,38 @@ import { DashboardPage } from './dashboardPage';
 
 export class LoginPage {
 	readonly page: Page;
-	readonly link: string;
-	readonly username: Locator;
-	readonly password: Locator;
-	readonly submitBtn: Locator;
+	readonly loginUrl: string;
+	readonly emailInput: Locator;
+	readonly passwordInput: Locator;
+	readonly loginButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
-		this.link = '/#/auth/login';
+		this.loginUrl = '/#/auth/login';
 
 		// elements
-		this.username = page.locator('//*[@formcontrolname="email"]');
-		this.password = page.locator('//*[@formcontrolname="password"]');
-		this.submitBtn = page.getByRole('button', { name: 'Autenticar' });
+		this.emailInput = page.locator('//*[@formcontrolname="email"]');
+		this.passwordInput = page.locator('//*[@formcontrolname="password"]');
+		this.loginButton = page.getByRole('button', { name: 'Autenticar' });
 	}
 
 	async navigateTo(): Promise<void> {
-		await this.page.goto(this.link);
+		// Navigate to the login page URL.
+		await this.page.goto(this.loginUrl);
 	}
 
-	async doLogin(username: string, password: string): Promise<DashboardPage> {
+	async doLogin(email: string, password: string): Promise<DashboardPage> {
+		// Navigate to the login page.
 		await this.navigateTo();
-		await this.username.fill(username);
-		await this.password.fill(password);
-		await this.submitBtn.click();
+
+		// Fill in the email and password fields.
+		await this.emailInput.fill(email);
+		await this.passwordInput.fill(password);
+
+		// Click the login button.
+		await this.loginButton.click();
+
+		// Return a new instance of the DashboardPage after successful login.
 		return new DashboardPage(this.page);
 	}
 }

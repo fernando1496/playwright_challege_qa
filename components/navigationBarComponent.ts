@@ -4,17 +4,20 @@ import { CategoryPage } from '../pages/categoryPage';
 
 export class NavigationBarComponent {
 	readonly page: Page;
-	readonly categoryPageBtn: Locator;
+	readonly categoryPageButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
 		// elements
-		this.categoryPageBtn = page.locator('//*[@href="#/category-type"]');
+		this.categoryPageButton = page.locator('//*[@href="#/category-type"]');
 	}
 
-	async goTocategoryPage(): Promise<CategoryPage> {
-		await this.categoryPageBtn.click();
+	async goToCategoryPage(): Promise<CategoryPage> {
+		// Click the button to navigate to the category page.
+		await this.categoryPageButton.click();
+
+		// Return a new instance of the CategoryPage class.
 		return new CategoryPage(this.page);
 	}
 }

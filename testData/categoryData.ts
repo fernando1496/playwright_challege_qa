@@ -4,7 +4,7 @@ import { Category } from '../utils/types';
 export function buildFakeCategory(): Category {
 	const randomString: string = currentTimestamp().toString();
 	return {
-		name: 'automatedCat' + randomString,
+		name: 'automated_cat' + randomString,
 		isSubcategory: false,
 	};
 }
@@ -12,7 +12,7 @@ export function buildFakeCategory(): Category {
 export function buildFakeSubcategory(): Category {
 	const randomString: string = currentTimestamp().toString();
 	return {
-		name: 'automatedCat' + randomString,
+		name: 'automated_cat' + randomString,
 		isSubcategory: true,
 		parentCategory: 'automatedCat1',
 	};

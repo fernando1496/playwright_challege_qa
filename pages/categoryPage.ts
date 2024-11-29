@@ -3,49 +3,61 @@ import { strict } from 'assert';
 
 export class CategoryPage {
 	readonly page: Page;
-	readonly addCategoryBtn: Locator;
-	readonly newCategoryName: Locator;
-	readonly newCategoryIsSub: Locator;
-	readonly newSubCat: Locator;
-	readonly newSubCatList: Locator;
-	readonly newSubCatName: Locator;
-	readonly submitBtn: Locator;
-	readonly paginationBtns: Locator;
-	readonly categoryItemTable: Locator;
+	readonly addCategoryButton: Locator;
+	readonly categoryNameInput: Locator;
+	readonly isSubCategoryCheckbox: Locator;
+	readonly parentCategoryDropdown: Locator;
+	readonly parentCategoryList: Locator;
+	readonly parentCategoryInput: Locator;
+	readonly submitButton: Locator;
+	readonly paginationButtons: Locator;
+	readonly categoryTable: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
 		// elements
-		this.addCategoryBtn = page.getByRole('button', { name: 'Adicionar', exact: false });
-		this.newCategoryName = page.locator('//*[@formcontrolname="name"]');
-		this.newCategoryIsSub = page.locator('//*[@formcontrolname="subCategory"]');
-		this.newSubCat = page.getByRole('combobox');
-		this.newSubCatList = page.getByRole('listbox');
-		this.newSubCatName = page.locator('//*[@role="combobox"]/input');
-		this.submitBtn = page.getByRole('button', { name: 'Aceptar' });
-		this.paginationBtns = page.getByRole('listitem');
-		this.categoryItemTable = page.getByRole('table');
+		this.addCategoryButton = page.getByRole('button', { name: 'Adicionar', exact: false });
+		this.categoryNameInput = page.locator('//*[@formcontrolname="name"]');
+		this.isSubCategoryCheckbox = page.locator('//*[@formcontrolname="subCategory"]');
+		this.parentCategoryDropdown = page.getByRole('combobox');
+		this.parentCategoryList = page.getByRole('listbox');
+		this.parentCategoryInput = page.locator('//*[@role="combobox"]/input');
+		this.submitButton = page.getByRole('button', { name: 'Aceptar' });
+		this.paginationButtons = page.getByRole('listitem');
+		this.categoryTable = page.getByRole('table');
 	}
 
-	async createCategory(name: string, isSubCategory = false, parentCat?: string): Promise<void> {
-		await this.addCategoryBtn.click();
-		await this.newCategoryName.fill(name);
+	async createCategory(name: string, isSubCategory = false, parentCategory?: string): Promise<void> {
+		// Click the "Add Category" button.
+		await this.addCategoryButton.click();
 
-		if (isSubCategory && typeof parentCat === 'string') {
-			await this.newCategoryIsSub.check({ force: true });
-			await this.newSubCat.click();
-			await this.newSubCatName.fill(parentCat);
-			await this.newSubCatList.filter({ hasText: parentCat }).click();
+		// Fill in the category name.
+		await this.categoryNameInput.fill(name);
+
+		// Handle subcategory creation if specified.
+		if (isSubCategory && typeof parentCategory === 'string') {
+			await this.isSubCategoryCheckbox.check({ force: true });
+			await this.parentCategoryDropdown.click();
+			await this.parentCategoryInput.fill(parentCategory);
+			await this.parentCategoryList.filter({ hasText: parentCategory }).click();
 		}
 
-		await this.submitBtn.click();
-		await this.newCategoryName.isHidden();
+		// Submit the form.
+		await this.submitButton.click();
+
+		// Wait for the category name input to be hidden, indicating the form was closed.
+		await this.categoryNameInput.isHidden();
 	}
 
 	async goToLastPage(): Promise<void> {
-		const numerOfButtons: number = await this.paginationBtns.count();
-		const lastIndexBtn: number = numerOfButtons - 2;
-		await this.paginationBtns.nth(lastIndexBtn).click();
+		// Get the total number of pagination buttons.
+		const totalPaginationButtons: number = await this.paginationButtons.count();
+
+		// Calculate the index of the last pagination button (excluding "Next").
+		const lastPageIndex: number = totalPaginationButtons - 2;
+
+		// Click the last page button.
+		await this.paginationButtons.nth(lastPageIndex).click();
 	}
 }
