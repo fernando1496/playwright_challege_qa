@@ -54,15 +54,17 @@ npx playwright test --debug
 ├── .eslintrc.js            # ESLint configuration
 ├── .eslintrc.json          # Alternative ESLint configuration
 ├── pages/                  # Page Object Model (POM) classes
-│   ├── LoginPage.ts
-│   ├── CategoryPage.ts
+│   ├── categoryPage.ts
+│   ├── dashboardPage.ts
+│   └── loginPage.ts
 ├── tests/                  # Test files
-│   ├── api/
-│   │   └── createUser.test.ts
-│   ├── ui/
-│   │   └── e2eWorkflow.test.ts
+│   ├── categoryTests.spec.ts
 ├── utils/                  # Utilities for API interactions
-│   └── apiUtils.ts
+│   ├── apiEndpoints.ts
+│   ├── apiMethods.ts
+│   ├── types.ts
+│   ├── apiRequests.ts
+│   └── generalFunctions.ts
 ├── playwright.config.ts    # Playwright configuration file
 ├── package.json            # Node.js dependencies and scripts
 ├── README.md               # Project documentation
